@@ -467,7 +467,125 @@ namespace ChatbotCybersecurity_POE3
                 Explanation = "Reporting phishing emails helps protect others from the same scam."
             });
 
-            // Add 9 more questions following the same pattern...
+            quizQuestions.Add(new QuizQuestion
+            {
+                Question = "What's the minimum recommended length for a secure password?",
+                Options = new List<QuizOption>
+        {
+            new QuizOption { Text = "6 characters", IsCorrect = false },
+            new QuizOption { Text = "8 characters", IsCorrect = false },
+            new QuizOption { Text = "12 characters", IsCorrect = true },
+            new QuizOption { Text = "16 characters", IsCorrect = false }
+        },
+                Explanation = "NIST recommends at least 12 characters for better security against brute force attacks."
+            });
+
+
+            quizQuestions.Add(new QuizQuestion
+            {
+                Question = "What should you avoid doing on public Wi-Fi?",
+                Options = new List<QuizOption>
+        {
+            new QuizOption { Text = "Checking news websites", IsCorrect = false },
+            new QuizOption { Text = "Online banking", IsCorrect = true },
+            new QuizOption { Text = "Reading emails", IsCorrect = false },
+            new QuizOption { Text = "All of the above", IsCorrect = false }
+        },
+                Explanation = "Avoid sensitive activities like banking on public networks. Use a VPN if necessary."
+            });
+
+
+            quizQuestions.Add(new QuizQuestion
+            {
+                Question = "Why is it important to install software updates promptly?",
+                Options = new List<QuizOption>
+        {
+            new QuizOption { Text = "They often contain security patches", IsCorrect = true },
+            new QuizOption { Text = "They make your computer faster", IsCorrect = false },
+            new QuizOption { Text = "They add unnecessary features", IsCorrect = false },
+            new QuizOption { Text = "They improve battery life", IsCorrect = false }
+        },
+                Explanation = "Updates frequently fix vulnerabilities that hackers could exploit."
+            });
+
+            quizQuestions.Add(new QuizQuestion
+            {
+                Question = "Which of these is NOT a valid two-factor authentication method?",
+                Options = new List<QuizOption>
+        {
+            new QuizOption { Text = "Text message code", IsCorrect = false },
+            new QuizOption { Text = "Authenticator app", IsCorrect = false },
+            new QuizOption { Text = "Security questions", IsCorrect = true },
+            new QuizOption { Text = "Biometric verification", IsCorrect = false }
+        },
+                Explanation = "Security questions alone don't count as true two-factor authentication."
+            });
+
+            quizQuestions.Add(new QuizQuestion
+            {
+                Question = "What does the 'S' in HTTPS stand for?",
+                Options = new List<QuizOption>
+        {
+            new QuizOption { Text = "Standard", IsCorrect = false },
+            new QuizOption { Text = "Secure", IsCorrect = true },
+            new QuizOption { Text = "System", IsCorrect = false },
+            new QuizOption { Text = "Service", IsCorrect = false }
+        },
+                Explanation = "HTTPS = HyperText Transfer Protocol Secure, encrypting your connection."
+            });
+
+            quizQuestions.Add(new QuizQuestion
+            {
+                Question = "What should you do if you get a ransomware attack?",
+                Options = new List<QuizOption>
+        {
+            new QuizOption { Text = "Pay the ransom immediately", IsCorrect = false },
+            new QuizOption { Text = "Disconnect from networks and report it", IsCorrect = true },
+            new QuizOption { Text = "Ignore it and keep using your computer", IsCorrect = false },
+            new QuizOption { Text = "Restart your computer repeatedly", IsCorrect = false }
+        },
+                Explanation = "Never pay ransoms. Isolate the device and contact IT professionals."
+            });
+
+            quizQuestions.Add(new QuizQuestion
+            {
+                Question = "Are password managers generally considered safe?",
+                Options = new List<QuizOption>
+        {
+            new QuizOption { Text = "Yes, when using a reputable service", IsCorrect = true },
+            new QuizOption { Text = "No, they're always risky", IsCorrect = false },
+            new QuizOption { Text = "Only if you pay for them", IsCorrect = false },
+            new QuizOption { Text = "Only for personal use", IsCorrect = false }
+        },
+                Explanation = "Reputable password managers use strong encryption and are safer than reusing passwords."
+            });
+
+            quizQuestions.Add(new QuizQuestion
+            {
+                Question = "When should you use a VPN?",
+                Options = new List<QuizOption>
+        {
+            new QuizOption { Text = "Only when traveling abroad", IsCorrect = false },
+            new QuizOption { Text = "When using public Wi-Fi networks", IsCorrect = true },
+            new QuizOption { Text = "Never, they're illegal", IsCorrect = false },
+            new QuizOption { Text = "Only for work purposes", IsCorrect = false }
+        },
+                Explanation = "VPNs encrypt your traffic, especially important on untrusted networks."
+            });
+
+            quizQuestions.Add(new QuizQuestion
+            {
+                Question = "Which is NOT a common sign of malware infection?",
+                Options = new List<QuizOption>
+        {
+            new QuizOption { Text = "Unexpected pop-up windows", IsCorrect = false },
+            new QuizOption { Text = "Slow computer performance", IsCorrect = false },
+            new QuizOption { Text = "New programs you didn't install", IsCorrect = false },
+            new QuizOption { Text = "Regular system updates", IsCorrect = true }
+        },
+                Explanation = "Regular updates are good! The other options may indicate malware."
+            });
+
         }
 
         private void StartQuiz_Click(object sender, RoutedEventArgs e)

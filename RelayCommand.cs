@@ -18,6 +18,6 @@ namespace ChatbotCybersecurity_POE3
         {
             _execute(parameter);
         }
-        public event EventHandler? CanExecuteChanged;
+        public event EventHandler CanExecuteChanged;
     }
 }
