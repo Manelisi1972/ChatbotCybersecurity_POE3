@@ -1,0 +1,218 @@
+﻿<Window x:Class="ChatbotCybersecurity_POE3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChatbotCybersecurity_POE3"
+        mc:Ignorable="d"
+        Title="Cybersecurity awerness Bot" Height="700" Width="900"  WindowStartupLocation="CenterScreen">
+    
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FF0078D7"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FF0066CC" Offset="0"/>
+            <GradientStop Color="#FF003366" Offset="1"/>
+        </LinearGradientBrush>
+
+        <DataTemplate x:Key="TaskTemplate">
+            <Border BorderBrush="#FFCCCCCC" BorderThickness="0,0,0,1" Padding="5" Margin="0,0,0,5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox Grid.Column="0" IsChecked="{Binding IsCompleted}" VerticalAlignment="Center"
+                              Margin="0,0,10,0" Checked="CheckBox_Checked"/>
+
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="{Binding Title}" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                        <TextBlock Text="{Binding ReminderText}" Foreground="Blue" Margin="0,5,0,0"
+                                   Visibility="{Binding HasReminder, Converter={StaticResource BoolToVisibility}}"/>
+                    </StackPanel>
+
+                    <Button Grid.Column="2" Content="Delete" Background="Red" Foreground="White"
+                            Command="{Binding DeleteCommand}" Padding="5,2" Margin="5,0,0,0"/> 
+                    
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="LogEntryTemplate">
+            <StackPanel Margin="0,5">
+                <TextBlock Text="{Binding Timestamp, StringFormat='[{0:MM/dd h:mm tt}]'}" 
+                           FontStyle="Italic" Foreground="Gray"/>
+                <TextBlock Text="{Binding ActionDescription}" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding Details}" Foreground="DarkGray" Margin="10,0,0,0" 
+                           TextWrapping="Wrap" FontStyle="Italic"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Column - Chat Interface -->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Border Grid.Row="0" Background="{StaticResource HeaderGradient}" Padding="10">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    
+                    <TextBlock Text="Wishi Cybersecurity Awareness Bot" 
+                               Foreground="White" FontSize="24" FontWeight="Bold"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Chat Area -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="10">
+                <ItemsControl x:Name="ChatItems">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="0,5" CornerRadius="5" Padding="10" 
+                                    Background="{Binding BackgroundBrush}">
+                                <TextBlock Text="{Binding Message}" TextWrapping="Wrap" 
+                                           Foreground="{Binding TextColor}"
+                                           FontSize="14"/>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!--User Input Area -->
+            <Grid Grid.Row="2" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="UserInputBox" Grid.Column="0" 
+                         VerticalContentAlignment="Center"
+                         KeyDown="UserInputBox_KeyDown"/>
+
+                <Button x:Name="SendButton" Grid.Column="1" Content="Send" 
+                        Width="80" Click="SendButton_Click"/>
+            </Grid>
+
+            <!-- Status Bar -->
+            <StatusBar Grid.Row="3" Background="#FFEEEEEE">
+                <StatusBarItem>
+                    <TextBlock x:Name="StatusText" Text="Ready"/>
+                </StatusBarItem>
+                <Separator/>
+                <StatusBarItem>
+                    <TextBlock Text="{Binding CurrentTime}"/>
+                </StatusBarItem>
+            </StatusBar>
+        </Grid>
+
+        <!-- Right Column - Features Panel -->
+        <Grid Grid.Column="1" Background="#FFF5F5F5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                
+                
+            </Grid.RowDefinitions>
+
+            <TabControl Grid.Row="1" Margin="10">
+                <!-- Tasks Tab -->
+                <TabItem Header="Tasks">
+                    <ScrollViewer>
+                        <ItemsControl x:Name="TasksList" ItemTemplate="{StaticResource TaskTemplate}"
+                                     Margin="10"/>
+                    </ScrollViewer>
+                </TabItem>
+
+                <!-- Quiz Tab -->
+                <TabItem Header="Quiz">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <StackPanel x:Name="QuizPanel" Visibility="Collapsed">
+                                <TextBlock x:Name="QuizQuestion" FontSize="16" FontWeight="Bold" 
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <ItemsControl x:Name="QuizOptions">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <RadioButton Content="{Binding Text}" GroupName="QuizAnswers"
+                                                         Margin="0,5" Checked="QuizOption_Checked"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <Button x:Name="SubmitQuizAnswer" Content="Submit Answer" 
+                                        Margin="0,20,0,0" Click="SubmitQuizAnswer_Click"/>
+
+                                <TextBlock x:Name="QuizFeedback" TextWrapping="Wrap" Margin="0,10" 
+                                          FontStyle="Italic" Visibility="Collapsed"/>
+
+                                <StackPanel x:Name="QuizResultsPanel" Orientation="Vertical" 
+                                            Visibility="Collapsed" Margin="0,20">
+                                    <TextBlock x:Name="QuizScore" FontSize="16" FontWeight="Bold"/>
+                                    <TextBlock x:Name="QuizFeedbackMessage" TextWrapping="Wrap" 
+                                               Margin="0,10"/>
+                                    <Button x:Name="RestartQuiz" Content="Try Again" Margin="0,10" 
+                                            Click="RestartQuiz_Click" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <Button x:Name="StartQuiz" Content="Start Cybersecurity Quiz" 
+                                    Click="StartQuiz_Click" Margin="10" Padding="10"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+
+                <!-- Activity Log Tab -->
+                <TabItem Header="Activity Log" x:Name="ActivityLogTab">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <Button x:Name="RefreshActivityLog" Content="Refresh Log" 
+                                    Click="RefreshActivityLog_Click" Margin="10" Padding="5"/>
+
+                            <ItemsControl x:Name="ActivityLogList" ItemTemplate="{StaticResource LogEntryTemplate}"
+                                        Margin="10"/>
+
+                            <Button x:Name="ShowFullLog" Content="Show Full History" 
+                                    Click="ShowFullLog_Click" Margin="10" Padding="5"
+                                    Visibility="Collapsed"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
+
+            <Button Grid.Row="2" Content="Add New Task" Margin="10" Padding="10"
+                    Click="AddTaskButton_Click" Background="#FF0078D7" Foreground="White"/>
+        </Grid>
+    </Grid>
+</Window>

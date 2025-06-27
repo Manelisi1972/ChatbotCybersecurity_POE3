@@ -1,0 +1,29 @@
+﻿<Window x:Class="ChatbotCybersecurity_POE3.TaskDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        
+        Title="Add New Task" Height="400" Width="300">
+
+    <StackPanel Margin="10">
+        <Label Content="Task Title:"/>
+        <TextBox x:Name="TitleBox"/>
+
+        <Label Content="Description:" Margin="0,10,0,0"/>
+        <TextBox x:Name="DescriptionBox" Height="80" AcceptsReturn="True"/>
+
+        <CheckBox x:Name="ReminderCheck" Content="Set Reminder" Margin="0,10,0,0"/>
+
+        <StackPanel Orientation="Horizontal" Margin="0,5,0,0" 
+                   Visibility="{Binding IsChecked, ElementName=ReminderCheck}">
+            <Label Content="Remind me in"/>
+            <TextBox x:Name="DaysBox" Width="30" Margin="5,0,5,0" Text="7"/>
+            <Label Content="days"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="OK" Width="80" Margin="0,0,10,0" Click="OK_Click"/>
+            <Button Content="Cancel" Width="80" Click="Cancel_Click"/>
+        </StackPanel>
+    </StackPanel>
+        
+        
+</Window>
